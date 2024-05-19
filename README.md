@@ -1,38 +1,43 @@
-# Heart-Sensor-Project
+# Integração Arduino com Node-RED e MQTT
 
-# Sensor de Frequência Cardíaca com Arduino Uno e MQTT
+Este projeto demonstra como integrar um Arduino Uno com o Node-RED e publicar dados em um servidor MQTT (Mosquitto Cloud) usando a porta COM4. O sensor de frequência cardíaca é utilizado para coletar os dados que são enviados para o Node-RED via porta serial e, posteriormente, publicados no servidor MQTT.
 
-Este projeto consiste em um sensor de frequência cardíaca que utiliza uma placa Arduino Uno para medir os batimentos cardíacos e se conecta à internet através do Node-RED e do protocolo MQTT.
-
-## Componentes Necessários
+## Componentes Utilizados
 
 - Arduino Uno
-- Sensor de frequência cardíaca 
 - Gravity: IO Expansion Shield for Arduino V7.1
+- Gravity: PPG Heart Rate Monitor Sensor for Arduino (Analog/Digital)
+- Node-RED
+- Servidor MQTT (Mosquitto Cloud)
 
+## Configuração do Arduino
 
-## Montagem
+### Hardware
 
-1. Conecte o sensor de frequência cardíaca ao Arduino Uno seguindo o esquema de pinos adequado.
-2. Abra o Node-RED e crie um fluxo para receber os dados do sensor.
-3. Configure o fluxo para publicar os dados via MQTT.
+1. Conecte o Gravity: IO Expansion Shield ao Arduino Uno.
+2. Conecte o Gravity: PPG Heart Rate Monitor Sensor ao shield:
+   - **VCC** do sensor ao **VCC** do shield.
+   - **GND** do sensor ao **GND** do shield.
+   - **S (Signal)** do sensor ao pino analógico **A0** do shield.
 
-## Instalação
+### Código Arduino
 
-1. Clone este repositório para o seu computador.
-2. Abra o Node-RED e importe o fluxo fornecido no arquivo `flow.json`.
-3. Configure as credenciais MQTT no Node-RED.
-4. Carregue o código Arduino (`heart_rate_sensor.ino`) no Arduino Uno.
+Carregue o seguinte código no Arduino para ler os dados do sensor de frequência cardíaca e enviá-los via porta serial:
 
-## Uso
+```cpp
+#define HEART_RATE_SENSOR_PIN A0
 
-- Execute o fluxo no Node-RED.
-- O sensor de frequência cardíaca começará a medir os batimentos cardíacos.
-- Os dados serão publicados no tópico MQTT configurado.
+void setup() {
+  Serial.begin(9600); // Inicializa a comunicação serial a 9600 baud
+  Serial.println("Inicializando leitura do sensor de frequência cardíaca...");
+  pinMode(HEART_RATE_SENSOR_PIN, INPUT);
+}
 
-
-## Licença
-
-Este projeto está licenciado sob a licença MIT - consulte o arquivo LICENSE para obter detalhes.
+void loop() {
+  int heartRate = analogRead(HEART_RATE_SENSOR_PIN); // Lê o valor do sensor
+  Serial.print("Frequência Cardíaca: ");
+  Serial.println(heartRate); // Imprime o valor lido no Monitor Serial
+  delay(1000); // Espera 1 segundo antes de ler novamente
+}
 
 
