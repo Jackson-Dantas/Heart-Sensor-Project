@@ -1,0 +1,82 @@
+[
+    {
+        "id": "serial_in_node_id",
+        "type": "serial in",
+        "z": "flow_id",
+        "name": "",
+        "serial": "serial_port_id",
+        "x": 200,
+        "y": 200,
+        "wires": [
+            [
+                "mqtt_out_node_id",
+                "debug_node_id"
+            ]
+        ]
+    },
+    {
+        "id": "mqtt_out_node_id",
+        "type": "mqtt out",
+        "z": "flow_id",
+        "name": "",
+        "topic": "sensor/heartRate",
+        "qos": "0",
+        "retain": "false",
+        "broker": "mqtt_broker_id",
+        "x": 400,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "debug_node_id",
+        "type": "debug",
+        "z": "flow_id",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 400,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "serial_port_id",
+        "type": "serial-port",
+        "z": "",
+        "serialport": "COM4",
+        "serialbaud": "9600",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "xonxoff": false,
+        "rtscts": false,
+        "dsrdtr": false,
+        "cts": false,
+        "dtr": false,
+        "rts": false
+    },
+    {
+        "id": "mqtt_broker_id",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "",
+        "broker": "test.mosquitto.org",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    }
+]
